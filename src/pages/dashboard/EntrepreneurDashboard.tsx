@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Bell, Calendar, TrendingUp, AlertCircle, PlusCircle } from 'lucide-react';
+import MeetingCalendar from '../../components/MeetingCalendar';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -10,6 +11,8 @@ import { useAuth } from '../../context/AuthContext';
 import { CollaborationRequest } from '../../types';
 import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
 import { investors } from '../../data/users';
+import VideoCall from '../../components/VideoCall';           
+import DocumentChamber from '../../components/DocumentChamber';
 
 export const EntrepreneurDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -114,6 +117,13 @@ export const EntrepreneurDashboard: React.FC = () => {
         </Card>
       </div>
       
+     {/* Meeting Calendar Section */}
+     <MeetingCalendar />
+    {/*  Video Call Section */}
+    <VideoCall />
+      
+      {/*Document Chamber */}
+      <DocumentChamber />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Collaboration requests */}
         <div className="lg:col-span-2 space-y-4">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, PieChart, Filter, Search, PlusCircle } from 'lucide-react';
+import MeetingCalendar from '../../components/MeetingCalendar';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -10,6 +11,8 @@ import { useAuth } from '../../context/AuthContext';
 import { Entrepreneur } from '../../types';
 import { entrepreneurs } from '../../data/users';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
+import VideoCall from '../../components/VideoCall';           // ADD THIS
+import DocumentChamber from '../../components/DocumentChamber'; 
 
 export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -146,7 +149,13 @@ export const InvestorDashboard: React.FC = () => {
           </CardBody>
         </Card>
       </div>
+      {/*  Meeting Calendar */}
+      <MeetingCalendar />
+      {/ Video Call Section */}
+      <VideoCall />
       
+      {/* Document Chamber */}
+      <DocumentChamber />
       {/* Entrepreneurs grid */}
       <div>
         <Card>

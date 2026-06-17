@@ -13,15 +13,20 @@ import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
 import { investors } from '../../data/users';
 import VideoCall from '../../components/VideoCall';           
 import DocumentChamber from '../../components/DocumentChamber';
+import PaymentSection from '../../components/PaymentSection';
+import PasswordStrength from '../../components/PasswordStrength';
+import TwoFactorAuth from '../../components/TwoFactorAuth';
 
 export const EntrepreneurDashboard: React.FC = () => {
   const { user } = useAuth();
   const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
   const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
   
+  // ✅ ADD THIS - State for password input
+  const [password, setPassword] = useState('');
+  
   useEffect(() => {
     if (user) {
-      // Load collaboration requests
       const requests = getRequestsForEntrepreneur(user.id);
       setCollaborationRequests(requests);
     }
@@ -48,9 +53,7 @@ export const EntrepreneurDashboard: React.FC = () => {
         </div>
         
         <Link to="/investors">
-          <Button
-            leftIcon={<PlusCircle size={18} />}
-          >
+          <Button leftIcon={<PlusCircle size={18} />}>
             Find Investors
           </Button>
         </Link>
@@ -117,13 +120,48 @@ export const EntrepreneurDashboard: React.FC = () => {
         </Card>
       </div>
       
-     {/* Meeting Calendar Section */}
-     <MeetingCalendar />
-    {/*  Video Call Section */}
-    <VideoCall />
+      {/* Meeting Calendar Section */}
+      <MeetingCalendar />
       
-      {/*Document Chamber */}
+      {/* Video Call Section */}
+      <VideoCall />
+      
+      {/* Document Chamber */}
       <DocumentChamber />
+      
+      {/* Payment Section */}
+      <PaymentSection />
+      
+      {/* ✅ Security Section - Password Strength with input */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Password Strength Card */}
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            Password Strength
+          </h3>
+          <p className="text-sm text-gray-600 mb-2">
+            Enter a password to check its strength
+          </p>
+          <input
+            type="password"
+            placeholder="Enter password..."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+          {/* ✅ Now password is defined! */}
+          <PasswordStrength password={password} />
+        </div>
+        
+        {/* 2FA Card */}
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            Two-Factor Authentication
+          </h3>
+          <TwoFactorAuth />
+        </div>
+      </div>
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Collaboration requests */}
         <div className="lg:col-span-2 space-y-4">
